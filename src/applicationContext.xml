@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+		
+	
+	<context:component-scan base-package="com.archivesmanagement">
+	    <context:exclude-filter type="annotation" 
+			expression="org.springframework.stereotype.Controller"/>
+		<context:exclude-filter type="annotation" 
+			expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+	</context:component-scan>
+
+<context:property-placeholder location="classpath:db.properties"/>
+
+
+
+<!-- 这里配置第一个数据源 -->
+<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+<property name="user"  value="${jdbc.user}"></property>
+<property name="password"  value="${jdbc.password}"></property>
+<property name="driverClass"  value="${jdbc.driverClass}"></property>
+<property name="jdbcUrl"  value="${jdbc.jdbcUrl}"></property>
+<property name="initialPoolSize"  value="${jdbc.initialPoolSize}"></property>
+<property name="maxPoolSize"  value="${jdbc.maxPoolSize}"></property>
+</bean>
+
+
+<!-- 这里是第一个数据源对应的sessionFactory -->
+<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+
+<property name="dataSource" ref="dataSource"></property>
+
+<property name="configLocation" value="classpath:hibernate.cfg.xml"></property>
+
+<property name="mappingLocations" value="classpath:com/archivesmanagement/model/*.hbm.xml"></property>
+</bean>
+
+	<!-- 配置 Spring 的声明式事务 -->
+	<!-- 1. 配置事务管理器 -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<!-- 2. 配置事务属性, 需要事务管理器 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<!-- <tx:method name="get*" read-only="true"/> -->
+			<tx:method name="*"/>
+		</tx:attributes>
+	</tx:advice>
+
+	<!-- 3. 配置事务切点, 并把切点和事务属性关联起来 -->
+	<aop:config>
+		<aop:pointcut expression="execution(* com.archivesmanagement.service.*.*(..))" 
+			id="txPointcut"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
+	
+	</aop:config>
+	
+<!-- 		<aop:config>
+	
+	<aop:pointcut expression="execution(* com.archivesmanagement.aop.*.*(..))" id="txPointcut1"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/> 
+	</aop:config> --><!-- 这里注释掉看看有没有问题 -->
+	
+	
+	
+	
+	
+	
+	
+		<!-- 配置 Spring 的声明式事务 -->
+	<!-- 1. 配置事务管理器 -->
+	<bean id="transactionManager2" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory2"></property>
+	</bean>
+
+	<!-- 2. 配置事务属性, 需要事务管理器 -->
+	<tx:advice id="txAdvice2" transaction-manager="transactionManager2">
+		<tx:attributes>
+			<!-- <tx:method name="get*" read-only="true"/> -->
+			<tx:method name="*"/>
+		</tx:attributes>
+	</tx:advice>
+
+	<!-- 3. 配置事务切点, 并把切点和事务属性关联起来 -->
+	<aop:config>
+		<aop:pointcut expression="execution(* com.archivesmanagement.service.*.*(..))" 
+			id="txPointcut2"/>
+		<aop:advisor advice-ref="txAdvice2" pointcut-ref="txPointcut2"/>
+	
+	</aop:config>
+	
+	
+	
+	
+		
+	
+	<!-- 配置切面的 bean. -->
+	
+
+	<!-- <bean id="vlidationAspect"
+		class="com.archivesmanagement.aop.UserPrivilegeAspect"></bean>
+
+	配置 AOP
+	<aop:config>
+		配置切点表达式
+		<aop:pointcut expression="execution(* com.archivesmanagement.controller.UserController.*(..))" 
+			id="pointcut"/>
+		配置切面及通知
+		<aop:aspect ref="loggingAspect" order="2">
+			<aop:before method="beforeMethod" pointcut-ref="pointcut"/>
+			<aop:after method="afterMethod" pointcut-ref="pointcut"/>
+			<aop:after-throwing method="afterThrowing" pointcut-ref="pointcut" throwing="e"/>
+			<aop:after-returning method="afterReturning" pointcut-ref="pointcut" returning="result"/>
+			 
+			<aop:around method="aroundMethod" pointcut-ref="pointcut"/>
+			
+		</aop:aspect>	
+		<aop:aspect ref="vlidationAspect" order="1">
+			<aop:before method="validateArgs" pointcut-ref="pointcut"/>
+		</aop:aspect>
+	</aop:config> -->
+	
+	<aop:aspectj-autoproxy proxy-target-class="true"></aop:aspectj-autoproxy>
+	
+
+</beans>
