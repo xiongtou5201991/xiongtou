@@ -1,0 +1,50 @@
+/*头部样式开始*/
+#header{
+    /*background: url("../images/headerbg.png") repeat-x scroll 0 0 #FFFFFF;*/
+    background-color: #000;
+    height: 168px;
+}
+#header .contWidth {
+    position: relative;
+    height: 105px;
+    margin: 0 auto;
+    width: 990px;
+    z-index: 100;
+}
+
+
+
+
+/*导航样式开始*/
+.mainNav {
+    position: absolute;
+    top: 168px;
+    left: 0;
+    height: 37px;
+    line-height: 37px;
+    width: 990px;
+    /*z-index:100;*/
+    background-color: #4A4A4A;
+}
+.mainNav .nav {
+    display: inline;
+    float: left;
+    margin-left: 25px;
+}
+.mainNav ul li { 
+	float:left; 
+    display: inline;
+	margin-right:14px;
+	/*position: relative ;
+	z-index:100;*/
+}
+.mainNav ul li a { 
+	display:block;
+	padding:0 8px; 
+	font-weight:700;
+	color:#fff;
+	font-size:14px;
+}
+.mainNav ul li a:hover { 
+	background:none; 
+}
