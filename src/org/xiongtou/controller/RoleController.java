@@ -1,13 +1,6 @@
-package org.konghao.cms.controller;
+package org.xiongtou.controller;
 
-import javax.inject.Inject;
 
-import org.konghao.basic.util.EnumUtils;
-import org.konghao.cms.auth.AuthClass;
-import org.konghao.cms.model.Role;
-import org.konghao.cms.model.RoleType;
-import org.konghao.cms.service.IRoleService;
-import org.konghao.cms.service.IUserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;

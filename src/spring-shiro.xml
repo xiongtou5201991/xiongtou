@@ -13,14 +13,34 @@
 	<description>== Shiro Components ==</description>
  
 	<!-- 授权 认证 -->
-	<bean id="MyRealm" class="org.xiongtou.realm.MyRealm" ></bean>
+	<bean id="MyRealm" class="org.xiongtou.realm.MyRealm" >
+	<property name="credentialsMatcher">
+	<bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+	<property name="hashAlgorithmName"  value="MD5"></property>
+	<property name="hashIterations" value="1"></property>
+	</bean>
+	</property>
+	
+	</bean>
 	
 	
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="MyRealm"/>
+         <property name="cacheManager" ref="cacheManager"/>
     </bean>
 
 
+
+
+    <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <!-- Set a net.sf.ehcache.CacheManager instance here if you already have one.  If not, a new one
+             will be creaed with a default config:
+             <property name="cacheManager" ref="ehCacheManager"/> -->
+        <!-- If you don't have a pre-built net.sf.ehcache.CacheManager instance to inject, but you want
+             a specific Ehcache configuration to be used, specify that here.  If you don't, a default
+             will be used.: -->
+        <property name="cacheManagerConfigFile" value="classpath:ehcache.xml"/> 
+    </bean>
 
 	<!--
 		自定义角色过滤器 支持多个角色可以访问同一个资源 eg:/home.jsp = authc,roleOR[admin,user]
@@ -33,7 +53,14 @@
 		<property name="successUrl" value="/index.jsp" />
 		<property name="unauthorizedUrl" value="/unauthorized.jsp" />
 		
-
+		 <!--  
+        	配置哪些页面需要受保护. 
+        	以及访问这些页面需要的权限. 
+        	1). anon 可以被匿名访问
+        	2). authc 必须认证(即登录)后才可能访问的页面. 
+        	3). logout 登出.
+        	4). roles 角色过滤器
+        -->
 		<property name="filterChainDefinitions" >
 			<value>
 				/login.jsp = anon
@@ -41,7 +68,12 @@
             </value>
 		</property>
 	</bean>
-	<!-- Shiro生命周期处理器-->
+	<!-- Shiro生命周期处理器,可以自动的来调用配置在 Spring IOC 容器中 shiro bean 的生命周期方法. -->
 	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+	<!--  
+    5. 启用 IOC 容器中使用 shiro 的注解. 但必须在配置了 LifecycleBeanPostProcessor 之后才可以使用. 
+    -->     
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor"/>
 </beans>
 

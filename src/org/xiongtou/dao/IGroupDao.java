@@ -1,4 +1,4 @@
-package org.konghao.cms.dao;
+package org.xiongtou.dao;
 
 import java.util.List;
 

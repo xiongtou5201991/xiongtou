@@ -1,16 +1,11 @@
-package org.konghao.cms.dao;
+package org.xiongtou.dao;
 
 import java.util.List;
 
-import org.konghao.basic.dao.BaseDao;
-import org.konghao.basic.model.Pager;
-import org.konghao.cms.model.Channel;
-import org.konghao.cms.model.ChannelTree;
-import org.konghao.cms.model.Group;
-import org.konghao.cms.model.GroupChannel;
+
 import org.springframework.stereotype.Repository;
 
-@Repository("groupDao")
+@Repository
 public class GroupDao extends BaseDao<Group> implements IGroupDao {
 
 	@Override

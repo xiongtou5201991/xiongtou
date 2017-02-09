@@ -1,11 +1,10 @@
-package org.konghao.cms.dao;
+package org.xiongtou.dao;
 
 
 import java.util.List;
 
-import org.konghao.basic.dao.BaseDao;
-import org.konghao.cms.model.Role;
 import org.springframework.stereotype.Repository;
+import org.xiongtou.model.Role;
 
 @Repository("roleDao")
 public class RoleDao extends BaseDao<Role> implements IRoleDao {

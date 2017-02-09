@@ -2,22 +2,12 @@ package org.xiongtou.controller;
 
 import java.util.List;
 
-import javax.inject.Inject;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.jboss.logging.Param;
-import org.konghao.cms.auth.AuthClass;
-import org.konghao.cms.auth.AuthMethod;
-import org.konghao.cms.dto.UserDto;
-import org.konghao.cms.model.ChannelTree;
-import org.konghao.cms.model.Role;
-import org.konghao.cms.model.RoleType;
-import org.konghao.cms.model.User;
-import org.konghao.cms.service.IChannelService;
-import org.konghao.cms.service.IGroupService;
-import org.konghao.cms.service.IRoleService;
-import org.konghao.cms.service.IUserService;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
