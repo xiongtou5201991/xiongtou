@@ -2,31 +2,18 @@ package org.xiongtou.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-
-public class UserGroup implements Serializable{
-	private Integer user_id;
+public class GroupRole implements Serializable{
+	
 	private Integer group_id;
+	private Integer role_id;
 	
-	public UserGroup() {
+	public GroupRole() {
 	}
 	
-	public UserGroup(Integer user_id, Integer group_id) {
+	public GroupRole(Integer group_id, Integer role_id) {
 		super();
-		this.user_id = user_id;
 		this.group_id = group_id;
-	}
-	public Integer getUser_id() {
-		return user_id;
-	}
-	public void setUser_id(Integer user_id) {
-		this.user_id = user_id;
+		this.role_id = role_id;
 	}
 	public Integer getGroup_id() {
 		return group_id;
@@ -34,13 +21,19 @@ public class UserGroup implements Serializable{
 	public void setGroup_id(Integer group_id) {
 		this.group_id = group_id;
 	}
+	public Integer getRole_id() {
+		return role_id;
+	}
+	public void setRole_id(Integer role_id) {
+		this.role_id = role_id;
+	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((group_id == null) ? 0 : group_id.hashCode());
-		result = prime * result + ((user_id == null) ? 0 : user_id.hashCode());
+		result = prime * result + ((role_id == null) ? 0 : role_id.hashCode());
 		return result;
 	}
 
@@ -52,22 +45,20 @@ public class UserGroup implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		UserGroup other = (UserGroup) obj;
+		GroupRole other = (GroupRole) obj;
 		if (group_id == null) {
 			if (other.group_id != null)
 				return false;
 		} else if (!group_id.equals(other.group_id))
 			return false;
-		if (user_id == null) {
-			if (other.user_id != null)
+		if (role_id == null) {
+			if (other.role_id != null)
 				return false;
-		} else if (!user_id.equals(other.user_id))
+		} else if (!role_id.equals(other.role_id))
 			return false;
 		return true;
 	}
 	
 	
-	
-	
-	
+
 }

@@ -26,14 +26,14 @@ public class MyRealm extends AuthorizingRealm{
 	}
 
 	
-	//ÊéàÊùÉ
+	// ⁄»®
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		return null;
 	}
 
 	
-	//ËÆ§ËØÅ
+	//»œ÷§
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) throws AuthenticationException {
 		
@@ -41,11 +41,10 @@ public class MyRealm extends AuthorizingRealm{
 		User currentUser = userService.getUserByName(token.getUsername());  
         if(currentUser != null){  
             if(currentUser.getStatus()!=null && currentUser.getStatus() == 0){  
-                throw new AuthenticationException("msg:ËØ•Â∑≤Â∏êÂè∑Á¶ÅÊ≠¢ÁôªÂΩï.");  
+                throw new AuthenticationException("msg:∏√“—’ ∫≈Ω˚÷πµ«¬º.");  
             }  
             AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(currentUser.getUsername(), currentUser.getPassword(),this.getName());  
             //this.setSession("currentUser", member.getLoginName());  
-              
             return authcInfo;  
         }  
         return null;  

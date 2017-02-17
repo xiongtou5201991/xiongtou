@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-2-17 11:44:50 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="org.xiongtou.model.UserRole" table="t_userrole">
+
+     <composite-id>
+    <key-property name="user_id" column="user_id" type="java.lang.Integer"></key-property>  
+    <key-property name="role_id" column="role_id" type="java.lang.Integer"></key-property>  
+    </composite-id>
+    </class>
+</hibernate-mapping>

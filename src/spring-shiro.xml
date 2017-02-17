@@ -14,13 +14,13 @@
  
 	<!-- 授权 认证 -->
 	<bean id="MyRealm" class="org.xiongtou.realm.MyRealm" >
-	<property name="credentialsMatcher">
+<!-- 	<property name="credentialsMatcher">
 	<bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
 	<property name="hashAlgorithmName"  value="MD5"></property>
 	<property name="hashIterations" value="1"></property>
 	</bean>
 	</property>
-	
+	 -->
 	</bean>
 	
 	
@@ -50,7 +50,7 @@
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
 		<property name="loginUrl" value="/login.jsp" />
-		<property name="successUrl" value="/index.jsp" />
+		<property name="successUrl" value="/jsp/index.jsp" />
 		<property name="unauthorizedUrl" value="/unauthorized.jsp" />
 		
 		 <!--  
@@ -63,8 +63,11 @@
         -->
 		<property name="filterChainDefinitions" >
 			<value>
-				/login.jsp = anon
-			    /** = authc
+				<!-- /login.jsp = anon
+			    /** = authc -->
+			    /Login/login=anon
+			    /jsp/index1.jsp=anon
+			    /jsp/**=authc
             </value>
 		</property>
 	</bean>

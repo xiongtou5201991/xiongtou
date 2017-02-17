@@ -14,7 +14,7 @@ public class UserDao extends BaseDao<User> implements IUserDao {
 	public User getUserByName(String username) {
 		
 		Session session =getSession();
-		String sql="select * from User where loginname=? and password=?";
+		String sql="select * from t_user where username=?";
 		SQLQuery query=session.createSQLQuery(sql).addEntity(User.class);
 		query.setString(0, username);
 		User user=(User) query.uniqueResult();

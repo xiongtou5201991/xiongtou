@@ -3,12 +3,14 @@ package org.xiongtou.service;
 import java.security.NoSuchAlgorithmException;
 
 import org.apache.jasper.security.SecurityUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.xiongtou.dao.IUserDao;
 import org.xiongtou.model.User;
 
 @Service("userService")
 public class UserService implements IUserService {
+	@Autowired
 	private IUserDao userDao;
 //	private IRoleDao roleDao;
 //	private IGroupDao groupDao;
@@ -25,16 +27,16 @@ public class UserService implements IUserService {
 	@Override
 	public User getUserByName(String username) {
 		User currentUser = userDao.getUserByName(username);
-		if(currentUser==null) throw new CmsException("用户名或者密码不正确");
-		try {
-			if(!SecurityUtil.md5(username,password).equals(currentUser.getPassword())) {
-				throw new CmsException("用户名或者密码不正确");
-				
-			}
-		} catch (NoSuchAlgorithmException e) {
-			throw new CmsException("密码加密失败:"+e.getMessage());
-		}
-		if(currentUser.getStatus()==0) throw new CmsException("用户已经停用，请与管理员联系");
+//		if(currentUser==null) throw new CmsException("鐢ㄦ埛鍚嶆垨鑰呭瘑鐮佷笉姝ｇ‘");
+//		try {
+//			if(!SecurityUtil.md5(username,password).equals(currentUser.getPassword())) {
+//				throw new CmsException("鐢ㄦ埛鍚嶆垨鑰呭瘑鐮佷笉姝ｇ‘");
+//				
+//			}
+//		} catch (NoSuchAlgorithmException e) {
+//			throw new CmsException("瀵嗙爜鍔犲瘑澶辫触:"+e.getMessage());
+//		}
+//		if(currentUser.getStatus()==0) throw new CmsException("鐢ㄦ埛宸茬粡鍋滅敤锛岃涓庣鐞嗗憳鑱旂郴");
 		return currentUser;
 		
 	}
@@ -56,35 +58,35 @@ public class UserService implements IUserService {
 //	}
 //	
 //	private void addUserRole(User user,int rid) {
-//		//1、检查角色对象是否存在，如果不存在，就抛出异常
+//		//1銆佹鏌ヨ鑹插璞℃槸鍚﹀瓨鍦紝濡傛灉涓嶅瓨鍦紝灏辨姏鍑哄紓甯�
 //		Role role = roleDao.load(rid);
-//		if(role==null) throw new CmsException("要添加的用户角色不存在");
-//		//2、检查用户角色对象是否已经存在，如果存在，就不添加
+//		if(role==null) throw new CmsException("瑕佹坊鍔犵殑鐢ㄦ埛瑙掕壊涓嶅瓨鍦�");
+//		//2銆佹鏌ョ敤鎴疯鑹插璞℃槸鍚﹀凡缁忓瓨鍦紝濡傛灉瀛樺湪锛屽氨涓嶆坊鍔�
 //		userDao.addUserRole(user, role);
 //	}
 //	
 //	private void addUserGroup(User user,int gid) {
 //		Group group = groupDao.load(gid);
-//		if(group==null) throw new CmsException("要添加用户的组对象不存在");
+//		if(group==null) throw new CmsException("瑕佹坊鍔犵敤鎴风殑缁勫璞′笉瀛樺湪");
 //		userDao.addUserGroup(user, group);
 //	}
 //
 //	@Override
 //	public void add(User user, Integer[] rids, Integer[] gids) {
 //		User tu = userDao.loadByUsername(user.getUsername());
-//		if(tu!=null)throw new CmsException("添加的用户对象已经存在，不能添加");
+//		if(tu!=null)throw new CmsException("娣诲姞鐨勭敤鎴峰璞″凡缁忓瓨鍦紝涓嶈兘娣诲姞");
 //		user.setCreateDate(new Date());
 //		try {
 //			user.setPassword(SecurityUtil.md5(user.getUsername(),user.getPassword()));
 //		} catch (NoSuchAlgorithmException e) {
-//			throw new CmsException("密码加密失败:"+e.getMessage());
+//			throw new CmsException("瀵嗙爜鍔犲瘑澶辫触:"+e.getMessage());
 //		}
 //		userDao.add(user);
-//		//添加角色对象
+//		//娣诲姞瑙掕壊瀵硅薄
 //		for(Integer rid:rids) {
 //			this.addUserRole(user, rid);
 //		}
-//		//添加用户组对象
+//		//娣诲姞鐢ㄦ埛缁勫璞�
 //		for(Integer gid:gids) {
 //			addUserGroup(user, gid);
 //		}
@@ -92,21 +94,21 @@ public class UserService implements IUserService {
 //
 //	@Override
 //	public void delete(int id) {
-//		//TODO 需要进行用户是否有文章的判断
+//		//TODO 闇�瑕佽繘琛岀敤鎴锋槸鍚︽湁鏂囩珷鐨勫垽鏂�
 //		
-//		//1、删除用户管理的角色对象
+//		//1銆佸垹闄ょ敤鎴风鐞嗙殑瑙掕壊瀵硅薄
 //		userDao.deleteUserGroups(id);
-//		//2、删除用户管理的组对象
+//		//2銆佸垹闄ょ敤鎴风鐞嗙殑缁勫璞�
 //		userDao.deleteUserRoles(id);
 //		userDao.delete(id);
 //	}
 //
 //	@Override
 //	public void update(User user, Integer[] rids, Integer[] gids) {
-//		//1、获取用户已经存在的组id和角色id
+//		//1銆佽幏鍙栫敤鎴峰凡缁忓瓨鍦ㄧ殑缁刬d鍜岃鑹瞚d
 //		List<Integer> erids = userDao.listUserRoleIds(user.getId());
 //		List<Integer> egids = userDao.listUserGroupIds(user.getId());
-//		//2、判断，如果erids中不存在rids就要进行添加
+//		//2銆佸垽鏂紝濡傛灉erids涓笉瀛樺湪rids灏辫杩涜娣诲姞
 //		for(Integer rid:rids) {
 //			if(!erids.contains(rid)) {
 //				addUserRole(user, rid);
@@ -117,7 +119,7 @@ public class UserService implements IUserService {
 //				addUserGroup(user,gid);
 //			}
 //		}
-//		//3、进行删除
+//		//3銆佽繘琛屽垹闄�
 //		for(Integer erid:erids) {
 //			if(!ArrayUtils.contains(rids, erid)) {
 //				userDao.deleteUserRole(user.getId(), erid);
@@ -134,7 +136,7 @@ public class UserService implements IUserService {
 //	@Override
 //	public void updateStatus(int id) {
 //		User u = userDao.load(id);
-//		if(u==null) throw new CmsException("修改状态的用户不存在");
+//		if(u==null) throw new CmsException("淇敼鐘舵�佺殑鐢ㄦ埛涓嶅瓨鍦�");
 //		if(u.getStatus()==0) u.setStatus(1);
 //		else u.setStatus(0);
 //		userDao.update(u);
@@ -178,15 +180,15 @@ public class UserService implements IUserService {
 //	@Override
 //	public User login(String username, String password) {
 //		User user = userDao.loadByUsername(username);
-//		if(user==null) throw new CmsException("用户名或者密码不正确");
+//		if(user==null) throw new CmsException("鐢ㄦ埛鍚嶆垨鑰呭瘑鐮佷笉姝ｇ‘");
 //		try {
 //			if(!SecurityUtil.md5(username,password).equals(user.getPassword())) {
-//				throw new CmsException("用户名或者密码不正确");
+//				throw new CmsException("鐢ㄦ埛鍚嶆垨鑰呭瘑鐮佷笉姝ｇ‘");
 //			}
 //		} catch (NoSuchAlgorithmException e) {
-//			throw new CmsException("密码加密失败:"+e.getMessage());
+//			throw new CmsException("瀵嗙爜鍔犲瘑澶辫触:"+e.getMessage());
 //		}
-//		if(user.getStatus()==0) throw new CmsException("用户已经停用，请与管理员联系");
+//		if(user.getStatus()==0) throw new CmsException("鐢ㄦ埛宸茬粡鍋滅敤锛岃涓庣鐞嗗憳鑱旂郴");
 //		return user;
 //	}
 //	@Override
@@ -198,12 +200,12 @@ public class UserService implements IUserService {
 //		try {
 //			User u = userDao.load(uid);
 //			if(!SecurityUtil.md5(u.getUsername(),oldPwd).equals(u.getPassword())) {
-//				throw new CmsException("原始密码输入不正确");
+//				throw new CmsException("鍘熷瀵嗙爜杈撳叆涓嶆纭�");
 //			}
 //			u.setPassword(SecurityUtil.md5(u.getUsername(), newPwd));
 //			userDao.update(u);
 //		} catch (NoSuchAlgorithmException e) {
-//			throw new CmsException("更新密码失败:"+e.getMessage());
+//			throw new CmsException("鏇存柊瀵嗙爜澶辫触:"+e.getMessage());
 //		}
 //	}
 

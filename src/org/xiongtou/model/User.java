@@ -5,32 +5,22 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-@Entity
-@Table(name="t_user")
 public class User implements Serializable{
 	
-	private int id;
-	/**
-	 * 用户登录名称
-	 */
+	private Integer id;
+
 	private String username;
-	/**
-	 * 用户登录密码
-	 */
+
 	private String password;
 
-	/**
-	 * 用户的状态：0表示停用，1表示启用
-	 */
+
 	private Integer status;
 	
-	/**
-	 * 创建时间
-	 */
+
 	private Date createDate;
 	
 	
-	public User(int id, String username, String password, int status) {
+	public User(Integer id, String username, String password, Integer status) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -40,10 +30,10 @@ public class User implements Serializable{
 	public User() {
 	}
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	

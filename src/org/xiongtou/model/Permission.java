@@ -2,20 +2,20 @@ package org.xiongtou.model;
 
 import java.io.Serializable;
 
-public class Group implements Serializable{
+public class Permission implements Serializable{
 	
 	private Integer id;
-	private String groupname;
 	private String descr;
+	private String url;
 	
-	public Group() {
+	public Permission() {
 	}
 	
-	public Group(Integer id, String groupname, String descr) {
+	public Permission(Integer id, String descr, String url) {
 		super();
 		this.id = id;
-		this.groupname = groupname;
 		this.descr = descr;
+		this.url = url;
 	}
 	public Integer getId() {
 		return id;
@@ -23,17 +23,19 @@ public class Group implements Serializable{
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getGroupname() {
-		return groupname;
-	}
-	public void setGroupname(String groupname) {
-		this.groupname = groupname;
-	}
 	public String getDescr() {
 		return descr;
 	}
 	public void setDescr(String descr) {
 		this.descr = descr;
 	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
 	
+	
+
 }

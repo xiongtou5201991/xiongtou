@@ -16,7 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.xiongtou.model.Role;
-import org.xiongtou.model.RoleType;
+
 import org.xiongtou.service.IUserService;
 
 @RequestMapping("/Login")
@@ -42,33 +42,35 @@ public class LoginController {
 	
 	@RequestMapping(value="/login",method=RequestMethod.POST)
 	public String doLogin(HttpServletRequest request) {
-		String username = request.getParameter("loginname");  
+		String username = request.getParameter("username");  
         String pwd = request.getParameter("password");  
-        UsernamePasswordToken token = new UsernamePasswordToken(username, pwd);   
         Subject currentUser = SecurityUtils.getSubject();   
-        currentUser.login(token);    
-        return "index";  
+    	if (!currentUser.isAuthenticated()) {
+    		UsernamePasswordToken token = new UsernamePasswordToken(username, pwd); 
+    		 currentUser.login(token);    
+    	}
+        return "index";
 	}
 	
-	@SuppressWarnings("unchecked")
-	private Set<String> getAllActions(List<Role> rs,HttpSession session) {
-		Set<String> actions = new HashSet<String>();
-		Map<String,Set<String>> allAuths = (Map<String,Set<String>>)session.getServletContext().getAttribute("allAuths");
-		actions.addAll(allAuths.get("base"));
-		for(Role r:rs) {
-			if(r.getRoleType()==RoleType.ROLE_ADMIN) continue;
-			actions.addAll(allAuths.get(r.getRoleType().name()));
-		}
-		return actions;
-	}
-	
-	
-	private boolean isRole(List<Role> rs,RoleType rt) {
-		for(Role r:rs) {
-			if(r.getRoleType()==rt) return true;
-		}
-		return false;
-	}
+//	@SuppressWarnings("unchecked")
+//	private Set<String> getAllActions(List<Role> rs,HttpSession session) {
+//		Set<String> actions = new HashSet<String>();
+//		Map<String,Set<String>> allAuths = (Map<String,Set<String>>)session.getServletContext().getAttribute("allAuths");
+//		actions.addAll(allAuths.get("base"));
+//		for(Role r:rs) {
+//			if(r.getRoleType()==RoleType.ROLE_ADMIN) continue;
+//			actions.addAll(allAuths.get(r.getRoleType().name()));
+//		}
+//		return actions;
+//	}
+//	
+//	
+//	private boolean isRole(List<Role> rs,RoleType rt) {
+//		for(Role r:rs) {
+//			if(r.getRoleType()==rt) return true;
+//		}
+//		return false;
+//	}
 	
 	
 //	@RequestMapping("/drawCheckCode")
