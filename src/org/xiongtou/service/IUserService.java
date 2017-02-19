@@ -1,5 +1,10 @@
 package org.xiongtou.service;
 
+import java.util.List;
+
+import org.xiongtou.model.Group;
+import org.xiongtou.model.Permission;
+import org.xiongtou.model.Role;
 import org.xiongtou.model.User;
 
 
@@ -73,4 +78,11 @@ public interface IUserService {
 //	
 //	public User login(String username,String password);
 	public User getUserByName(String username);
+	public List<User> listUser();
+	public List<Role> listRole();
+	public List<Permission> listPermission();
+	public List<Group> listUsergroup();
+	public User load(int id);
+	
+	
 }

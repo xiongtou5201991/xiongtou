@@ -1,212 +1,106 @@
 package org.xiongtou.controller;
 
+
 import java.util.List;
 
-
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-
-import org.jboss.logging.Param;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import org.xiongtou.model.Group;
+import org.xiongtou.model.Permission;
+import org.xiongtou.model.Role;
+import org.xiongtou.model.User;
+import org.xiongtou.service.IGroupService;
+import org.xiongtou.service.IRoleService;
+import org.xiongtou.service.IUserService;
 
 @Controller
-@RequestMapping("/admin/user")
+@RequestMapping("/user")
 public class UserController {
 	
-//	private IUserService userService;
-//	private IGroupService groupService;
-//	private IRoleService roleService;
-//	private IChannelService channelService;
-//	
-//	
-//	public IChannelService getChannelService() {
-//		return channelService;
-//	}
-//	@Inject
-//	public void setChannelService(IChannelService channelService) {
-//		this.channelService = channelService;
-//	}
-//	public IGroupService getGroupService() {
-//		return groupService;
-//	}
-//	@Inject
-//	public void setGroupService(IGroupService groupService) {
-//		this.groupService = groupService;
-//	}
-//
-//	public IRoleService getRoleService() {
-//		return roleService;
-//	}
-//	@Inject
-//	public void setRoleService(IRoleService roleService) {
-//		this.roleService = roleService;
-//	}
-//
-//	public IUserService getUserService() {
-//		return userService;
-//	}
-//
-//	@Inject
-//	public void setUserService(IUserService userService) {
-//		this.userService = userService;
-//	}
-//
-//	@RequestMapping("/users")
-//	public String list(Model model) {
-//		model.addAttribute("datas",userService.findUser());
-//		return "user/list";
-//	}
-//	
-//	private void initAddUser(Model model) {
-//		model.addAttribute("roles",roleService.listRole());
-//		model.addAttribute("groups", groupService.listGroup());
-//	}
-//	
-//	@RequestMapping(value="/add",method=RequestMethod.GET)
-//	public String add(Model model) {
-//		model.addAttribute("userDto",new UserDto());//user,user
-//		initAddUser(model);
-//		return "user/add";
-//	}
-//	
-//	@RequestMapping(value="/add",method=RequestMethod.POST)
-//	public String add(@Valid UserDto userDto,BindingResult br,Model model) {
-//		if(br.hasErrors()) {
-//			initAddUser(model);
-//			return "user/add";
-//		}
-//		userService.add(userDto.getUser(), userDto.getRoleIds(), userDto.getGroupIds());
-//		return "redirect:/admin/user/users";
-//	}
-//	
-//	@RequestMapping(value="/update/{id}",method=RequestMethod.GET)
-//	public String update(@PathVariable int id,Model model) {
-//		User u = userService.load(id);
-//		model.addAttribute("userDto",new UserDto(u,
-//				userService.listUserRoleIds(id),
-//				userService.listUserGroupIds(id)));//user,user
-//		initAddUser(model);
-//		return "user/update";
-//	}
-//	
-//	@RequestMapping(value="/update/{id}",method=RequestMethod.POST)
-//	public String update(@PathVariable int id,@Valid UserDto userDto,BindingResult br,Model model) {
-//		if(br.hasErrors()) {
-//			System.out.println(br.hasErrors());
-//			initAddUser(model);
-//			return "user/update";
-//		}
-//		User ou = userService.load(id);
-//		ou.setNickname(userDto.getNickname());
-//		ou.setPhone(userDto.getPhone());
-//		ou.setEmail(userDto.getEmail());
-//		ou.setStatus(userDto.getStatus());
-//		userService.update(ou, userDto.getRoleIds(), userDto.getGroupIds());
-//		return "redirect:/admin/user/users";
-//	}
-//	
-//	@RequestMapping(value="/delete/{id}",method=RequestMethod.GET)
-//	public String delete(@PathVariable int id) {
-//		userService.delete(id);
-//		return "redirect:/admin/user/users";
-//	}
-//	
-//	@RequestMapping(value="/updateStatus/{id}",method=RequestMethod.GET)
-//	public String updateStatus(@PathVariable int id) {
-//		userService.updateStatus(id);
-//		return "redirect:/admin/user/users";
-//	}
-//	
-//	@RequestMapping(value="/{id}",method=RequestMethod.GET)
-//	public String show(@PathVariable int id,Model model) {
-//		model.addAttribute(userService.load(id));
-//		model.addAttribute("gs",userService.listUserGroups(id));
-//		model.addAttribute("rs",userService.listUserRoles(id));
-//		return "user/show";
-//	}
-//	
-//	@RequestMapping("/showSelf")
-//	@AuthMethod
-//	public String showSelf(Model model,HttpSession session) {
-//		User user = (User)session.getAttribute("loginUser");
-//		model.addAttribute(user);
-//		model.addAttribute("gs",userService.listUserGroups(user.getId()));
-//		model.addAttribute("rs",userService.listUserRoles(user.getId()));
-//		return "user/show";
-//	}
-//	
-//	@RequestMapping(value="/updatePwd",method=RequestMethod.GET)
-//	@AuthMethod
-//	public String updatePwd(Model model,HttpSession session) {
-//		User u = (User)session.getAttribute("loginUser");
-//		model.addAttribute(u);
-//		return "user/updatePwd";
-//	}
-//	
-//	@RequestMapping(value="/updatePwd",method=RequestMethod.POST)
-//	@AuthMethod
-//	public String updatePwd(int id,String oldPwd,String password) {
-//		userService.updatePwd(id, oldPwd, password);
-//		return "redirect:/admin/user/showSelf";
-//	}
-//	
-//	/*@RequestMapping(value="/updatePwd",method=RequestMethod.POST)
-//	public String updatePwd(Model model,HttpSession session) {
-//		User u = (User)session.getAttribute("loginUser");
-//		model.addAttribute(u);
-//		return "user/updatePwd";
-//	}*/
-//	
-//	
-//	@RequestMapping(value="/updateSelf",method=RequestMethod.GET)
-//	@AuthMethod
-//	public String updateSelf(Model model,HttpSession session) {
-//		User u = (User)session.getAttribute("loginUser");
-//		model.addAttribute(new UserDto(u));
-//		return "user/updateSelf";
-//	}
-//	
-//	@RequestMapping(value="/updateSelf",method=RequestMethod.POST)
-//	@AuthMethod
-//	public String updateSelf(@Valid UserDto userDto,BindingResult br,Model model,HttpSession session) {
-//		if(br.hasErrors()) {
-//			return "user/updateSelf";
-//		}
-//		User ou = userService.load(userDto.getId());
-//		ou.setNickname(userDto.getNickname());
-//		ou.setPhone(userDto.getPhone());
-//		ou.setEmail(userDto.getEmail());
-//		userService.update(ou);
-//		session.setAttribute("loginUser", ou);
-//		return "redirect:/admin/user/showSelf";
-//	}
-//	
-//	@RequestMapping("/listChannels/{uid}")
-//	public String listChannels(@PathVariable int uid,Model model) {
-//		model.addAttribute(userService.load(uid));
-//		List<Role> rs = userService.listUserRoles(uid);
-//		for(Role r:rs) {
-//			if(r.getRoleType()==RoleType.ROLE_ADMIN) {
-//				model.addAttribute("uAdmin",1);
-//			}
-//		}
-//		return "/user/listChannel";
-//	}
-//	
-//	@RequestMapping("/userTree/{uid}")
-//	public @ResponseBody List<ChannelTree> groupTree(@PathVariable Integer uid,@RequestParam Integer isAdmin) {
-//		if(isAdmin!=null&&isAdmin==1) {
-//			return channelService.generateTree();
-//		}
-//		return groupService.generateUserChannelTree(uid);
-//	}
+	@Autowired
+	private IUserService userService;
+	@Autowired
+	private IGroupService groupService;
+	@Autowired
+	private IRoleService roleService;
+	public IUserService getUserService() {
+		return userService;
+	}
+	public void setUserService(IUserService userService) {
+		this.userService = userService;
+	}
+	public IGroupService getGroupService() {
+		return groupService;
+	}
+	public void setGroupService(IGroupService groupService) {
+		this.groupService = groupService;
+	}
+	public IRoleService getRoleService() {
+		return roleService;
+	}
+	public void setRoleService(IRoleService roleService) {
+		this.roleService = roleService;
+	}
+	
+	@RequestMapping(value="/listUser")
+	public ModelAndView listUser(){
+		ModelAndView mav=new ModelAndView("userList");
+		List<User> userList=userService.listUser();
+		mav.addObject("userList", userList);
+		return mav;
+	}
+	
+	@RequestMapping(value="/listRole")
+	public ModelAndView listRole(){
+		ModelAndView mav=new ModelAndView("roleList");
+		List<Role> roleList=userService.listRole();
+		mav.addObject("roleList", roleList);
+		return mav;
+	}
+	
+	@RequestMapping(value="/listUsergroup")
+	public ModelAndView listUsergroup(){
+		ModelAndView mav=new ModelAndView("groupList");
+		List<Group> groupList=userService.listUsergroup();
+		mav.addObject("groupList", groupList);
+		return mav;
+	}
+	
+	
+	@RequestMapping(value="/listPermission")
+	public ModelAndView listPermission(){
+		ModelAndView mav=new ModelAndView("permissionList");
+		List<Permission> permissionList=userService.listPermission();
+		mav.addObject("permissionList", permissionList);
+		return mav;
+	}
+	
+	@RequestMapping(value="/userDetail")
+	public ModelAndView userDetail(int id){
+		ModelAndView mav=new ModelAndView("userDetail");
+		User user=userService.loadUserDetail(id);
+		mav.addObject("user", user);
+		return mav;
+	}
+	
+	@RequestMapping(value="/roleDetail")
+	public ModelAndView roleDetail(int id){
+		ModelAndView mav=new ModelAndView("roleDetail");
+		Role role=roleService.load(id);
+		mav.addObject("role", role);
+		return mav;
+	}
+	
+	@RequestMapping(value="/groupDetail")
+	public ModelAndView usergroupDetail(int id){
+		ModelAndView mav=new ModelAndView("groupDetail");
+		Group group=groupService.load(id);
+		mav.addObject("group", group);
+		return mav;
+	}
+	
+
 	
 }

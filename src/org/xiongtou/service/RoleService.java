@@ -1,9 +1,28 @@
 package org.xiongtou.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.xiongtou.dao.IRoleDao;
+import org.xiongtou.model.Role;
 
 @Service("roleService")
 public class RoleService implements IRoleService {
+	
+	@Autowired
+	private IRoleDao roleDao;
+	
+	public IRoleDao getRoleDao() {
+		return roleDao;
+	}
+
+	public void setRoleDao(IRoleDao roleDao) {
+		this.roleDao = roleDao;
+	}
+
+	@Override
+	public Role load(int id) {
+		return roleDao.load(id);
+	}
 //	private IRoleDao roleDao;
 //	private IUserDao userDao;
 //	

@@ -1,10 +1,12 @@
 package org.xiongtou.service;
 
-import java.util.List;
+import org.xiongtou.model.Group;
 
 
 
 public interface IGroupService {
+	
+	public Group load(int id);
 //	public void add(Group group);
 //	public void delete(int id);
 //	public Group load(int id);

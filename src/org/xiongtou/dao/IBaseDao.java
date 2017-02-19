@@ -1,5 +1,6 @@
 package org.xiongtou.dao;
 
+import java.util.List;
 
 /**
  * 公共的DAO处理对象，这个对象中包含了Hibernate的所有基本操作和对SQL的操作
@@ -30,6 +31,8 @@ public interface IBaseDao<T> {
 	 * @return
 	 */
 	public T load(int id);
+	
+	
 	
 }
 

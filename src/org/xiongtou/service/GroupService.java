@@ -1,12 +1,34 @@
 package org.xiongtou.service;
 
-import java.util.List;
-
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.xiongtou.dao.IGroupDao;
+import org.xiongtou.model.Group;
 
 @Service("groupService")
 public class GroupService implements IGroupService{
+
+	@Autowired
+	private IGroupDao groupDao;
+	
+	
+	@Override
+	public Group load(int id) {
+		return groupDao.load(id);
+	}
+
+
+	public IGroupDao getGroupDao() {
+		return groupDao;
+	}
+
+
+	public void setGroupDao(IGroupDao groupDao) {
+		this.groupDao = groupDao;
+	}
+	
+	
+	
 //	private IGroupDao groupDao;
 //	private IUserDao userDao;
 //	
